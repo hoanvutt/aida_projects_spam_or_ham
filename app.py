@@ -13,8 +13,8 @@
 #   { "label": "spam", "is_spam": true, "spam_probability": 0.98 }
 
 import os
+from text_utils import basic_clean  # needed for joblib unpickle
 import joblib
-from text_utils import basic_clean 
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
