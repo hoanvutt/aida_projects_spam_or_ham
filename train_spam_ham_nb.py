@@ -6,6 +6,7 @@ import argparse
 import re
 import joblib
 import pandas as pd
+from text_utils import basic_clean
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import HashingVectorizer
