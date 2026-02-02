@@ -257,36 +257,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Feature cards (inspired by the .NET cards) */}
-      <section className="pb-12">
-        <div className="mx-auto max-w-6xl px-4">
-          <h2 className="text-center text-3xl font-bold tracking-tight">Build it with your API</h2>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              { title: "Web", desc: "Simple UI calling an HTTP API from a Next.js app.", color: "from-indigo-500 to-violet-500" },
-              { title: "Proxy", desc: "Avoid CORS by proxying requests via /api/predict.", color: "from-fuchsia-500 to-pink-500" },
-              { title: "Deploy", desc: "Deploy on Railway with one variable: SPAM_API_URL.", color: "from-sky-500 to-cyan-500" },
-              { title: "ML", desc: "Naive Bayes classification with SPAM/HAM probabilities.", color: "from-emerald-500 to-lime-500" },
-            ].map((c) => (
-              <div
-                key={c.title}
-                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/5"
-              >
-                <div className={"h-10 w-10 rounded-xl bg-gradient-to-br " + c.color} />
-                <div className="mt-4 text-lg font-semibold">{c.title}</div>
-                <div className="mt-1 text-sm text-slate-600 dark:text-slate-400">{c.desc}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center text-xs text-slate-500 dark:text-slate-400">
-            If you deploy this UI separately from the API, set{" "}
-            <code className="rounded bg-slate-100 px-1 py-0.5 text-slate-700 dark:bg-white/10 dark:text-slate-200">SPAM_API_URL</code> in Railway Variables.
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
