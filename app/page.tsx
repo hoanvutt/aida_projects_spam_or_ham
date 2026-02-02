@@ -67,37 +67,54 @@ export default function HomePage() {
     ? Math.max(result.spam_probability, result.ham_probability)
     : null;
 
+  const pillClass =
+    result?.is_spam
+      ? "bg-red-50 text-red-700 border-red-200"
+      : result
+      ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+      : "bg-slate-50 text-slate-700 border-slate-200";
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
       <div className="mx-auto max-w-3xl px-4 py-10">
-        <h1 className="text-2xl font-semibold">Spam / Ham Email Checker</h1>
-        <p className="mt-2 text-sm text-zinc-300">
-          Paste your email content, then click <span className="font-medium">Check</span>.
-        </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight">Spam / Ham Email Checker</h1>
+            <p className="mt-2 text-sm text-slate-600">
+              Paste your email content, then click <span className="font-medium">Check</span>.
+            </p>
+          </div>
 
-        <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5 shadow">
-          <label className="block text-sm font-medium text-zinc-200">Subject (optional)</label>
+          {badge && (
+            <div className={"shrink-0 rounded-full border px-3 py-1 text-sm font-semibold " + pillClass}>
+              {badge}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <label className="block text-sm font-medium text-slate-700">Subject (optional)</label>
           <input
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             placeholder="e.g., promo, invoice, meeting..."
-            className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm outline-none focus:border-zinc-600"
+            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-slate-400 focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
           />
 
-          <label className="mt-5 block text-sm font-medium text-zinc-200">Message</label>
+          <label className="mt-5 block text-sm font-medium text-slate-700">Message</label>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Paste the email body here..."
             rows={9}
-            className="mt-2 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3 text-sm outline-none focus:border-zinc-600"
+            className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none placeholder:text-slate-400 focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
           />
 
           <div className="mt-4 flex flex-wrap gap-2">
             <button
               onClick={onCheck}
               disabled={!canSubmit || loading}
-              className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-zinc-950 disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? "Checking..." : "Check"}
             </button>
@@ -109,67 +126,71 @@ export default function HomePage() {
                 setError(null);
                 setResult(null);
               }}
-              className="rounded-xl border border-zinc-800 bg-transparent px-4 py-2 text-sm text-zinc-200 hover:border-zinc-700"
+              className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm hover:bg-slate-50"
             >
               Clear
             </button>
 
             <button
               onClick={fillDemoSpam}
-              className="rounded-xl border border-zinc-800 bg-transparent px-4 py-2 text-sm text-zinc-200 hover:border-zinc-700"
+              className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm hover:bg-slate-50"
             >
               Demo SPAM
             </button>
 
             <button
               onClick={fillDemoHam}
-              className="rounded-xl border border-zinc-800 bg-transparent px-4 py-2 text-sm text-zinc-200 hover:border-zinc-700"
+              className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 shadow-sm hover:bg-slate-50"
             >
               Demo HAM
             </button>
           </div>
 
           {error && (
-            <div className="mt-4 rounded-xl border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-200">
+            <div className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
               {error}
             </div>
           )}
 
           {result && (
-            <div className="mt-4 rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
+            <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <div className="text-sm text-zinc-300">Result</div>
-                  <div className="mt-1 text-xl font-bold">{badge}</div>
+                  <div className="text-sm text-slate-600">Result</div>
+                  <div className="mt-1 text-xl font-bold text-slate-900">{badge}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm text-zinc-300">Confidence</div>
-                  <div className="mt-1 text-xl font-bold">{confidence?.toFixed(4)}</div>
+                  <div className="text-sm text-slate-600">Confidence</div>
+                  <div className="mt-1 text-xl font-bold text-slate-900">{confidence?.toFixed(4)}</div>
                 </div>
               </div>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-                  <div className="text-sm text-zinc-300">Spam probability</div>
-                  <div className="mt-1 text-lg font-semibold">{result.spam_probability.toFixed(6)}</div>
+                <div className="rounded-xl border border-slate-200 bg-white p-4">
+                  <div className="text-sm text-slate-600">Spam probability</div>
+                  <div className="mt-1 text-lg font-semibold text-slate-900">
+                    {result.spam_probability.toFixed(6)}
+                  </div>
                 </div>
-                <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-                  <div className="text-sm text-zinc-300">Ham probability</div>
-                  <div className="mt-1 text-lg font-semibold">{result.ham_probability.toFixed(6)}</div>
+                <div className="rounded-xl border border-slate-200 bg-white p-4">
+                  <div className="text-sm text-slate-600">Ham probability</div>
+                  <div className="mt-1 text-lg font-semibold text-slate-900">
+                    {result.ham_probability.toFixed(6)}
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-4 text-xs text-zinc-400">
-                Calls <code className="rounded bg-zinc-900 px-1 py-0.5">POST /predict</code> via a Next.js proxy route
-                to avoid CORS.
+              <div className="mt-4 text-xs text-slate-500">
+                Calls <code className="rounded bg-white px-1 py-0.5 border border-slate-200">POST /predict</code> via a Next.js
+                proxy route to avoid CORS.
               </div>
             </div>
           )}
         </div>
 
-        <footer className="mt-8 text-xs text-zinc-500">
+        <footer className="mt-8 text-xs text-slate-500">
           If you deploy this UI separately from the API, set{" "}
-          <code className="rounded bg-zinc-900 px-1 py-0.5">SPAM_API_URL</code> in Railway Variables.
+          <code className="rounded bg-white px-1 py-0.5 border border-slate-200">SPAM_API_URL</code> in Railway Variables.
         </footer>
       </div>
     </main>
