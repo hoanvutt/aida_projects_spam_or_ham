@@ -14,6 +14,7 @@
 
 import os
 import joblib
+from text_utils import basic_clean 
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
