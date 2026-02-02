@@ -20,3 +20,7 @@ Set environment variable (recommended for Railway):
 3. Add Variable:
    - `SPAM_API_URL=https://web-production-2c982.up.railway.app`
 4. Deploy
+
+
+## Security note
+Railway blocks deploys if `next` has known HIGH vulnerabilities. This project pins `next` to 14.2.35 to satisfy the scanner.
